@@ -16,7 +16,7 @@ services:
     ports:
       - "4000" # Map the container port to the host, change the host port if necessary
     environment:
-      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@db:5432/litellm"
+      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@llmdb:5432/litellm"
       STORE_MODEL_IN_DB: "True" # allows adding models to proxy via UI
     env_file:
       - .env # Load local .env file
@@ -29,7 +29,7 @@ services:
       retries: 3     # Retry up to 3 times if health check fails
       start_period: 40s  # Wait 40 seconds after container start before beginning health checks
 
-  db:
+  llmdb:
     image: postgres:16
     restart: always
     container_name: litellm_db
