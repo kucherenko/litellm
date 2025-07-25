@@ -14,9 +14,9 @@ services:
     #  - "--config=/app/config.yaml"
     ##############################################
     ports:
-      - "4000:4000" # Map the container port to the host, change the host port if necessary
+      - "4000" # Map the container port to the host, change the host port if necessary
     environment:
-      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@db:5433/litellm"
+      DATABASE_URL: "postgresql://llmproxy:dbpassword9090@db:5432/litellm"
       STORE_MODEL_IN_DB: "True" # allows adding models to proxy via UI
     env_file:
       - .env # Load local .env file
@@ -38,7 +38,7 @@ services:
       POSTGRES_USER: llmproxy
       POSTGRES_PASSWORD: dbpassword9090
     ports:
-      - "5433:5432"
+      - "5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data # Persists Postgres data across container restarts
     healthcheck:
@@ -53,7 +53,7 @@ services:
       - prometheus_data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - "9090"
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
